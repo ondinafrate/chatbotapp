@@ -1,3 +1,154 @@
-/**************/
-/* Custom CSS */
-/**************/
+
+body {
+  font-size: 100%;
+  font-family: 'Indie Flower', cursive;
+  color: #6682FB;
+}
+
+#divmargin{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+
+#about{
+  font-family: 'Indie Flower', cursive !important;
+  color: #6682FB!important;
+  font-size: 30px !important; 
+  font-weight: bold;
+}
+
+h1 {
+  font-family: 'Indie Flower', cursive !important;
+  font-weight: normal !important;
+  font-size: 50px !important; 
+  color: #6682FB !important;
+}
+
+h2 {
+  font-family: 'Indie Flower', cursive !important;
+  font-weight: normal !important;
+  font-style: italic !important;
+  font-size: 32px !important;
+}
+
+h3 {
+  font-family: 'Indie Flower', cursive !important;
+  font-size: 40px !important;
+}
+
+h4{
+  font-family: 'Indie Flower', cursive !important;
+  font-size: 50px !important;
+  color: #FA666E !important;
+}
+
+fieldset {
+/*height: 200px;*/
+  /*border: 1px dotted #000000;*/
+}
+
+legend {
+  font-family: 'Indie Flower', cursive !important;
+  font-size: 26px;
+}
+
+.wrapper {
+  transition: background .2s ease;
+}
+.section {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.short {
+  height: (100vh / 3);
+}
+
+.title {
+  white-space: nowrap;
+  font-weight: 100;
+  font-size: 4vw;
+  font-color: $clouds;
+  
+  a {
+    color: inherit;
+  }
+}
+
+
+.node {
+  cursor: pointer;
+}
+
+.node: hover {
+  stroke: #000;
+  stroke-width: 1.5px;
+}
+
+.node--leaf {
+  fill: #6682FB;
+}
+
+.label {
+  font-family: 'Open Sans', sans-serif;
+  font-size:  16px ;
+  text-anchor: middle;
+  text-shadow: 0 1px 0 #fff, 1px 0 0 #fff, -1px 0 0 #fff, 0 -1px 0 #fff;
+  color: #FB9296;
+}
+
+.label,
+.node--root,
+.node--leaf {
+  pointer-events: none;
+}
+
+input#message {
+  width: 100%;
+}
+#dialogue {
+  overflow: auto;
+  height: 200px;
+  width: 100%;
+}
+div#debug {
+  overflow: auto;
+  max-height: 100px;
+  width: 50%;
+}
+span.user {
+  font-family: 'Indie Flower', cursive;
+  font-weight: bold;
+  font-size: 20px;
+  color: #6682FB;
+}
+span.bot {
+  font-family: 'Indie Flower', cursive;
+  font-weight: bold;
+  font-size: 20px;
+  color: #FF0000;
+}
+table.input-table {
+  border: 0px;
+  border-collapse: separate;
+  border-spacing: 4px;
+  width: 100%;
+}
+table.input-table td.text-box {
+  padding: 4px; 
+  text-align: left;
+  vertical-align: middle; 
+}
+table.input-table td.send-button {
+  padding: 4px; 
+  text-align: center;
+  vertical-align: middle; 
+  width: 10px;
+}
+
+.node--root{
+  fill:transparent !important;
+}
+

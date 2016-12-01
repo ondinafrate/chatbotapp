@@ -1,0 +1,233 @@
+{
+      "name": "food",
+      "children": [{
+            "name": "Fruits",
+            "children": [{
+                  "name": "Banana",
+                  "size": 105
+            }, {
+                  "name": "Apple",
+                  "size": 95
+            }, {
+                  "name": "Orange",
+                  "size": 62
+            }, {
+                  "name": "Pineapple",
+                  "size": 82
+            }, {
+                  "name": "Strawberry",
+                  "size": 4
+            }, {
+                  "name": "Blueberry",
+                  "size": 85
+            }, {
+                  "name": "Lemon",
+                  "size": 17
+            }, {
+                  "name": "Lime",
+                  "size": 20
+            }, {
+                  "name": "Olives Kalamata & Chalkidiki",
+                  "size": 30
+            }, {
+                  "name": "Tomatoes Heirloom",
+                  "size": 40
+            }, {
+                  "name": "Pummelo",
+                  "size": 231
+            }]
+      },
+      {
+
+       
+            "name": "Meat",
+            "children": [{
+                  "name": "Salmon",
+                  "size": 412
+            }, {
+                  "name": "Pork",
+                  "size": 242
+            }, {
+                  "name": "Chicken",
+                  "size": 425
+            }, {
+                  "name": "Salami",
+                  "size": 41
+            }, {
+                  "name": "Ground Beef",
+                  "size": 332
+            }]
+      },
+      {
+            "name": "Vegetables",
+            "children": [{
+                  "name": "Red Onion",
+                  "size": 42
+            }, {
+                  "name": "Potato Russet",
+                  "size": 162
+            }, {
+                  "name": "Kale",
+                  "size": 49
+            }, {
+                  "name": "Potato Yukon Gold",
+                  "size": 161
+            }, {
+                  "name": "Broccoli",
+                  "size": 50
+            }, {
+                  "name": "Cauliflower",
+                  "size": 146
+            }, {
+                  "name": "Romaine Lettuce",
+                  "size": 15
+            }, {
+                  "name": "Scallions",
+                  "size": 5
+            }, {
+                  "name": "Beans Kidney Canned",
+                  "size": 84
+            }, {
+                  "name": "Spinach",
+                  "size": 7
+            }, {
+                  "name": "Cabbage",
+                  "size": 6
+            }, {
+                  "name": "Cucumber",
+                  "size": 8
+            }, {
+                  "name": "Yellow Onion",
+                  "size": 64
+            }, {
+                  "name": "Caper",
+                  "size": 2
+            }]
+
+      },
+      {
+            "name": "Dairy",
+            "children": [{
+                  "name": "Eggs Large Brown",
+                  "size": 72
+            }, {
+                  "name": "Yogurt Greek Non-Fat",
+                  "size": 120
+            }, {
+                  "name": "Milk Organic Fat-Free",
+                  "size": 90
+            }, {
+                  "name": "Cheese Gouda",
+                  "size": 101
+            }, {
+                  "name": "Cheese Jarlsberg",
+                  "size": 100
+            }, {
+                  "name": "Butter",
+                  "size": 100
+            }, {
+                  "name": "Cheese Brie",
+                  "size": 480
+            }, {
+                  "name": "Yogurt Plain Organic Non-Fat",
+                  "size": 110
+            }]
+
+       },
+      {
+            "name": "Grains",
+            "children": [{
+                  "name": "Bread Focaccia",
+                  "size": 250
+            }, {
+                  "name": "Cereal Honey Nut O's",
+                  "size": 110
+            }, {
+                  "name": "English Muffins",
+                  "size": 134
+            }, {
+                  "name": "Crackers",
+                  "size": 81
+            }]
+
+      },
+      {
+            "name": "Sweets",
+            "children": [{
+                  "name": "Milk Chocolate",
+                  "size": 235
+            }, {
+                  "name": "Cake Panettone",
+                  "size": 325
+            }, {
+                  "name": "Baking Mix Banana Bread",
+                  "size": 167
+            }, {
+                  "name": "Chocolate Advent Calendar",
+                  "size": 533
+            }]
+       },
+       {
+            "name": "drinks",
+            "children": [{
+                  "name": "GT's Kombucha Gingerade",
+                  "size": 60
+            }, {
+                  "name": "Ginger Tea",
+                  "size": 2
+            }]
+      },
+       {
+            "name": "Snacks",
+            "children": [{
+                  "name": "Chips Kettle",
+                  "size": 120
+            }]
+       },
+       {
+            "name": "Oil",
+            "children": [{
+                  "name": "Olive Oil",
+                  "size": 119
+            }, {
+                  "name": "Dressing Red Wine",
+                  "size": 45
+            }, {
+                  "name": "Sunflower Oil",
+                  "size": 120
+            }]
+      },
+       {
+            "name": "Frozen Food",
+            "children": [{
+                  "name": "Pork Gyoza",
+                  "size": 230
+            }, {
+                  "name": "Pizza BBQ Chicken",
+                  "size": 340
+            }, {
+                  "name": "Tarte d'Champignon",
+                  "size": 300
+            }]
+      },
+       {
+            "name": "Nuts",
+            "children": [{
+                  "name": "Sunflower Seeds",
+                  "size": 818
+            }]
+      },
+       {
+            "name": "Flower",
+            "children": [{
+
+                  "name": "Caper",
+                  "size": 2
+            }]
+      }
+      
+ ]
+
+
+
+}

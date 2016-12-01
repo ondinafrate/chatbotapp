@@ -1,0 +1,18 @@
+<form action="/api/update/{{food._id}}" method="POST">
+  Name:<br>
+  <input type="text" name="name" placeholder="Enter Name" value="{{food.name}}"><br>
+  Type:<br>
+  <input type="text" name="type" placeholder="Enter Type" value="{{food.type}}"><br>
+  Calories:<br>
+  <input type="text" name="calories" placeholder="Calories" value="{{food.calories}}"><br>
+  Protein:<br>
+  <input type="text" name="protein" placeholder="Enter Protein" value="{{food.protein}}"><br>
+  Carbohydrates:<br>
+  <input type="text" name="carbohydrates" placeholder="Enter Carbohydrates" value="{{food.carbohydrates}}"><br>
+  Fat:<br>
+  <input type="text" name="fat" placeholder="Enter Fat" value="{{food.fat}}"><br>
+  Url:<br>
+  <input type="text" name="url" placeholder="Enter Url" value="{{food.url}}"><br>
+
+  <input type="submit" value="Submit">
+</form>

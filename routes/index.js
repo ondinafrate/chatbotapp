@@ -3,18 +3,43 @@ var router = express.Router();
 var mongoose = require('mongoose');
 
 // our db model
-var Animal = require("../models/model.js");
+var Food = require("../models/model.js");
+
+//rivescript
+var RiveScript = require("rivescript"),
+    RSCoffeeScript = require("rivescript-contrib-coffeescript");
+
+var bot = new RiveScript();
+
+// Register the CoffeeScript handler.
+bot.setHandler("coffeescript", new RSCoffeeScript(bot));
+
+// Load your replies like normal, and `>object * coffeescript` macros will be
+// loaded and usable just like JavaScript ones.
+bot.loadDirectory("./replies", function() {
+    bot.sortReplies();
+
+    var reply = bot.reply("reverse hello world");
+    if (reply === "dlrow olleh") {
+        console.log("It works!");
+    }
+});
+//ends Rive
 
 // simple route to render am HTML form that can POST data to our server
 // NOTE that this is not a standard API route, and is really for testing
-router.get('/create-pet', function(req,res){
-  res.render('pet-form.html')
+router.get('/create-food', function(req,res){
+  res.render('food-form.html')
 })
 
 // simple route to render an HTML page that pulls data from our server and displays it on a page
 // NOTE that this is not a standard API route, and is really for testing
-router.get('/show-pets', function(req,res){
-  res.render('show-pets.html')
+router.get('/show-food', function(req,res){
+  res.render('show-food.html')
+})
+
+router.get('/about', function(req, res){
+  res.render('about.html')
 })
 
 /**
@@ -24,19 +49,31 @@ router.get('/show-pets', function(req,res){
  * @return {Object} json
  */
 router.get('/', function(req, res) {
-  
-  var jsonData = {
-  	'name': 'node-express-api-boilerplate',
-  	'api-status':'OK'
-  }
-
-  // respond with json data
-  res.json(jsonData)
+  res.render('home.html')
 });
 
 // simple route to show an HTML page
-router.get('/sample-page', function(req,res){
-  res.render('sample.html')
+router.get('/edit/:id', function(req,res){
+
+  var requestedId = req.params.id;
+
+  Food.findById(requestedId, function(err, data){
+    if(err){
+      var error = {
+        status: "ERROR",
+        message: err
+      }
+      return res.json(err)
+    }
+
+    var viewData = {
+      status: "OK",
+      food: data
+    }
+
+    return res.render('edit.html', viewData);
+  })
+ 
 })
 
 // /**
@@ -52,44 +89,45 @@ router.post('/api/create', function(req, res){
 
     // pull out the information from the req.body
     var name = req.body.name;
-    var age = req.body.age;
-    var tags = req.body.tags.split(","); // split string into array
-    var weight = req.body.weight;
-    var color = req.body.color;
+    var type = req.body.type;
+    //var tags = req.body.tags.split(","); // split string into array
+    var calories = req.body.calories;
+    var protein = req.body.protein;
+    var carbohydrates = req.body.carbohydrates;
+    var fat = req.body.fat;
     var url = req.body.url;
 
     // hold all this data in an object
     // this object should be structured the same way as your db model
-    var animalObj = {
+    var foodObject = {
       name: name,
-      age: age,
-      tags: tags,
-      description: {
-        weight: weight,
-        color: color
-      },
-      url: url
+      type: type,
+      calories: calories,
+      protein: protein,
+      carbohydrates: carbohydrates,
+      fat: fat,
+      url: url,
     };
 
     // create a new animal model instance, passing in the object
-    var animal = new Animal(animalObj);
+    var food = new Food(foodObject);
 
     // now, save that animal instance to the database
     // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model-save    
-    animal.save(function(err,data){
+    food.save(function(err,data){
       // if err saving, respond back with error
       if (err){
-        var error = {status:'ERROR', message: 'Error saving animal'};
+        var error = {status:'ERROR', message: 'Error saving food'};
         return res.json(error);
       }
 
-      console.log('saved a new animal!');
+      console.log('saved a new food!');
       console.log(data);
 
       // now return the json data of the new animal
       var jsonData = {
         status: 'OK',
-        animal: data
+        food: data
       }
 
       return res.json(jsonData);
@@ -109,18 +147,18 @@ router.get('/api/get/:id', function(req, res){
   var requestedId = req.params.id;
 
   // mongoose method, see http://mongoosejs.com/docs/api.html#model_Model.findById
-  Animal.findById(requestedId, function(err,data){
+  Food.findById(requestedId, function(err,data){
 
     // if err or no user found, respond with error 
     if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find that animal'};
+      var error = {status:'ERROR', message: 'Could not find that food'};
        return res.json(error);
     }
 
     // otherwise respond with JSON data of the animal
     var jsonData = {
       status: 'OK',
-      animal: data
+      food: data
     }
 
     return res.json(jsonData);
@@ -137,10 +175,10 @@ router.get('/api/get/:id', function(req, res){
 router.get('/api/get', function(req, res){
 
   // mongoose method to find all, see http://mongoosejs.com/docs/api.html#model_Model.find
-  Animal.find(function(err, data){
+  Food.find(function(err, data){
     // if err or no animals found, respond with error 
     if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find animals'};
+      var error = {status:'ERROR', message: 'Could not find food'};
       return res.json(error);
     }
 
@@ -148,11 +186,30 @@ router.get('/api/get', function(req, res){
 
     var jsonData = {
       status: 'OK',
-      animals: data
+      food: data
     } 
 
     res.json(jsonData);
 
+  })
+
+})
+
+router.get('/api/getByDate', function(req,res){
+
+  console.log('in /api/getByDate')
+
+  var requestedYear = parseInt(req.query.year);
+  var requestedMonth = parseInt(req.query.month);
+  var requestedDay = parseInt(req.query.day);
+
+  console.log(requestedYear);
+  console.log(requestedMonth);
+  console.log(requestedDay);
+
+  Food.find({"dateAdded": {"$gte": new Date(requestedYear, requestedMonth, requestedDay-1), "$lt": new Date(requestedYear, requestedMonth, requestedDay)}}, function(err,data){
+    console.log(data);
+    res.json(data);
   })
 
 })
@@ -169,7 +226,7 @@ router.get('/api/search', function(req,res){
   console.log("we are searching for " + searchTerm);
 
   // let's find that animal
-  Animal.find({name: searchTerm}, function(err,data){
+  Food.find({name: searchTerm}, function(err,data){
     // if err, respond with error 
     if(err){
       var error = {status:'ERROR', message: 'Something went wrong'};
@@ -186,7 +243,7 @@ router.get('/api/search', function(req,res){
 
     var jsonData = {
       status: 'OK',
-      animals: data
+      food: data
     } 
 
     res.json(jsonData);        
@@ -209,7 +266,7 @@ router.post('/api/update/:id', function(req, res){
    var dataToUpdate = {}; // a blank object of data to update
 
     // pull out the information from the req.body and add it to the object to update
-    var name, age, weight, color, url; 
+    var name, type, calories, protein, carbohydrates, url; 
 
     // we only want to update any field if it actually is contained within the req.body
     // otherwise, leave it alone.
@@ -218,55 +275,68 @@ router.post('/api/update/:id', function(req, res){
       // add to object that holds updated data
       dataToUpdate['name'] = name;
     }
-    if(req.body.age) {
-      age = req.body.age;
+    if(req.body.type) {
+      type = req.body.type;
       // add to object that holds updated data
-      dataToUpdate['age'] = age;
+      dataToUpdate['type'] = type;
     }
-    if(req.body.weight) {
-      weight = req.body.weight;
+    if(req.body.calories) {
+      calories = req.body.calories;
       // add to object that holds updated data
-      dataToUpdate['description'] = {};
-      dataToUpdate['description']['weight'] = weight;
+      dataToUpdate['calories'] = calories;
+      //dataToUpdate['description']['calories'] = calories;
     }
-    if(req.body.color) {
-      color = req.body.color;
+    if(req.body.protein) {
+      protein = req.body.protein;
       // add to object that holds updated data
-      if(!dataToUpdate['description']) dataToUpdate['description'] = {};
-      dataToUpdate['description']['color'] = color;
+      //if(!dataToUpdate['description']) dataToUpdate['description'] = {};
+      dataToUpdate['protein'] = protein;
     }
+    if(req.body.carbohydrates) {
+      carbohydrates = req.body.carbohydrates;
+      // add to object that holds updated data
+      //if(!dataToUpdate['description']) dataToUpdate['description'] = {};
+      dataToUpdate['carbohydrates'] = carbohydrates;
+    }
+    if(req.body.fat) {
+      fat = req.body.fat;
+      // add to object that holds updated data
+      //if(!dataToUpdate['description']) dataToUpdate['description'] = {};
+      dataToUpdate['fat'] = fat;
+    }
+
     if(req.body.url) {
       url = req.body.url;
       // add to object that holds updated data
       dataToUpdate['url'] = url;
     }
 
-    var tags = []; // blank array to hold tags
-    if(req.body.tags){
-      tags = req.body.tags.split(","); // split string into array
-      // add to object that holds updated data
-      dataToUpdate['tags'] = tags;
-    }
+    // var tags = []; // blank array to hold tags
+    // if(req.body.tags){
+    //   tags = req.body.tags.split(","); // split string into array
+    //   // add to object that holds updated data
+    //   dataToUpdate['tags'] = tags;
+    // }
 
 
     console.log('the data to update is ' + JSON.stringify(dataToUpdate));
 
     // now, update that animal
     // mongoose method findByIdAndUpdate, see http://mongoosejs.com/docs/api.html#model_Model.findByIdAndUpdate  
-    Animal.findByIdAndUpdate(requestedId, dataToUpdate, function(err,data){
+    Food.findByIdAndUpdate(requestedId, dataToUpdate, function(err,data){
       // if err saving, respond back with error
       if (err){
-        var error = {status:'ERROR', message: 'Error updating animal'};
+        var error = {status:'ERROR', message: 'Error updating food'};
         return res.json(error);
       }
 
-      console.log('updated the animal!');
+      console.log('updated the food!');
       console.log(data);
 
       // now return the json data of the new person
       var jsonData = {
         status: 'OK',
-        animal: data
+        food: data
       }
 
       return res.json(jsonData);
@@ -287,9 +357,9 @@ router.get('/api/delete/:id', function(req, res){
   var requestedId = req.params.id;
 
   // Mongoose method to remove, http://mongoosejs.com/docs/api.html#model_Model.findByIdAndRemove
-  Animal.findByIdAndRemove(requestedId,function(err, data){
+  Food.findByIdAndRemove(requestedId,function(err, data){
     if(err || data == null){
-      var error = {status:'ERROR', message: 'Could not find that animal to delete'};
+      var error = {status:'ERROR', message: 'Could not find that food to delete'};
       return res.json(error);
     }
 
